@@ -4,23 +4,6 @@ import java.util.Scanner;
 
 public class CasosDePrueba {
 
-	public static void casoSinSentido() {
-
-		System.out.println("Sentencia break\n");
-
-		for (int i = 1; i < 5; i++) {
-			System.out.println("Veces que se ejecuta el bucle: " + i);
-			break; // Rompe el bucle
-		}
-
-		System.out.println("\nSentencia continue\n");
-
-		for (int i = 1; i < 5; i++) {
-			System.out.println("Veces que se ejecuta el bucle: " + i);
-			continue; // Sale de la iteración actual y salta a la siguiente
-		}
-	}
-
 	public static void casoBasico() {
 
 		System.out.println("Sentencia break\n");
@@ -55,14 +38,18 @@ public class CasosDePrueba {
 		Scanner leer = new Scanner(System.in);
 		String nombre;
 		String comprobacionNombre = " 1234567890ªº!|·@#$%&¬/()=?'¿¡`^*+][¨´}{Ç-_.:,;<>\\";
+		int intentos = 3;
 
 		do {
+
 			System.out.println("Introduzca nombre (máximo 8 carácteres):");
 			nombre = leer.nextLine();
+
 			if (nombre.length() > 8) {
 				System.err.println("Error. El nombre no puede exceder los 8 carácteres. Inserte un dato válido.");
 				continue;
 			}
+
 			if (nombre.isEmpty()) {
 				System.err.println(
 						"Error. La inserción de datos debe contener al menos un carácter. Inserte un dato válido.");
@@ -70,27 +57,72 @@ public class CasosDePrueba {
 			}
 
 			for (int i = 0; i < nombre.length(); i++) {
+
 				for (int j = 0; j < comprobacionNombre.length(); j++) {
+
 					if (nombre.substring(i, i + 1).equalsIgnoreCase(comprobacionNombre.substring(j, j + 1))) {
 						System.err.println(
 								"Error. El nombre no puede contener datos numéricos, carácteres especiales ni espacios. Sea más preciso.");
 						nombre = "";
-						break;
+						intentos--;
+
+						if (intentos == 0) {
+
+							break;
+
+						} else if (intentos > 0) {
+
+							break;
+
+						}
 					}
 				}
 			}
+
 		} while ((nombre.length() > 8) || (nombre.equalsIgnoreCase("")));
 
-		System.out.println("Bucle roto");
+		if (intentos == 0) {
+			System.out.println("Ha agotado todos los intentos.");
+			System.exit(0);
+		}
+
+		System.out.println("Aquí continuaría el programa.");
 	}
 
-	public static void preIncrementoYpostIncremento() {
-		int x = 1;
+	public static void casoExperto() {
+		boolean control = true;
+		int aux = 0;
 
-		System.out.println(x++); // x vale 1 y la expresión vale 2
-		System.out.println(x); // x vale 2
+		primero: {
+			aux++;
 
-//		System.out.println(++x); // x vale 2 y la expresión vale 2
-//		System.out.println(x); // x vale 2
+			segundo: {
+				aux++;
+
+				tercero: {
+					aux++;
+
+					cuarto: {
+						aux++;
+
+						quinto: {
+							if (control) {
+								break segundo;
+							}
+
+							sexto: {
+								aux++;
+								System.out.println("Bloque 6º. No se ejecuta.");
+							}
+							System.out.println("Bloque 5º. No se ejecuta.");
+						}
+						System.out.println("Bloque 4º. No se ejecuta.");
+					}
+					System.out.println("Bloque 3º. No se ejecuta.");
+				}
+				System.out.println("Bloque 2º. No se ejecuta.");
+			}
+			System.out.println("Bloque 1º. Se ejecuta. aux vale: " + aux);
+		}
 	}
 }
